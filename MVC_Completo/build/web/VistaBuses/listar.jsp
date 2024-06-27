@@ -1,0 +1,131 @@
+<%-- 
+    Document   : listar
+    Created on : 30 may 2024, 15:55:02
+    Author     : HP
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.*"%>
+<%@page import="Modelo.clsEBus"%>
+<%@page import="ModeloDAO.BusDAO"%>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Listado de Bus</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f4f4f9;
+                margin: 0;
+                padding: 0;
+            }
+
+            header {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 0;
+                text-align: center;
+            }
+
+            .container {
+                width: 90%;
+                margin: 50px auto;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+
+            h1 {
+                text-align: center;
+                color: #333;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            table, th, td {
+                border: 1px solid #ddd;
+            }
+
+            th, td {
+                padding: 10px;
+                text-align: left;
+            }
+
+            th {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            tbody tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            form {
+                display: flex;
+                justify-content: center;
+            }
+
+            form button {
+                margin: 5px;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                background-color: #4CAF50;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+
+            form button:hover {
+                background-color: #45a049;
+                transform: scale(1.05);
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Listado de Bus</h1>
+        </header>
+        <div class="container">
+            <a href="ControladorBus?accion=add">Agregar</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID_BUS</th>
+                        <th>PLACA</th>
+                        <th>MODELO</th>
+                        <th>CAPACIDAD</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                    BusDAO dao = new BusDAO();
+                    List<clsEBus> list = dao.ListarBus();
+                    for (clsEBus Bus : list) {
+                    %>
+                    <tr>
+                        <td><%=Bus.getId()%></td>
+                        <td><%=Bus.getPlaca()%></td>
+                        <td><%=Bus.getModelo()%></td>
+                        <td><%=Bus.getCapacidad()%></td>
+                        <td>
+                            <a href="ControladorBus?accion=edit&id=<%= Bus.getId()%>">Editar</a>
+                            <a href="ControladorBus?accion=eliminar&id=<%= Bus.getId()%>">Eliminar</a>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
